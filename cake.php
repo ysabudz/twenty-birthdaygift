@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+<title>Marie's 20th Birthday!</title>
+
+<style>
+/* GLOBAL STYLES */
+body {
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  background: #38bdf8; /* Fallback */
+  overflow-x: hidden;
+  overflow-y: auto; 
+  min-height: 100vh;
+}
+
+/* BACKGROUNDS */
+.sky-day {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #38bdf8, #fde047);
+  transition: opacity 2.5s ease;
+  z-index: 0;
+}
+
+.sky-night {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #1e1b4b, #5b21b6, #3b0764);
+  opacity: 0;
+  transition: opacity 2.5s ease;
+  z-index: 1;
+}
+
+.sky-night::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle,
+    rgba(255, 170, 80, 0.6) 0%,
+    rgba(255, 120, 50, 0.2) 40%,
+    transparent 70%);
+  border-radius: 50%;
+}
+
+.night .sky-night { opacity: 1; }
+
+/* SCENE LOGIC */
+.scene {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  transition: opacity 1.5s ease, transform 1s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+#introScene, #cakeScene {
+  justify-content: center;
+  height: 100vh;
+  position: fixed; /* Keep these locked during transitions */
+}
+
+#sunsetScene {
+  justify-content: flex-start;
+  padding: 80px 20px;
+  min-height: 100vh;
+  position: relative; /* Allow page to grow for scrolling */
+}
+
+.hidden { opacity: 0; pointer-events: none; transform: translateY(20px); }
+.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+/* ELEMENTS */
+.cloud {
+  position: fixed;
+  background: white;
+  border-radius: 200px;
+  opacity: 0.3;
+  animation: floatClouds 60s linear infinite;
+  z-index: 2;
+}
+
+.cloud::before, .cloud::after {
+  content: "";
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+.cloud1 { width: 200px; height: 60px; top: 10%; left: -250px; }
+.cloud1::before { width: 100px; height: 100px; top: -40px; left: 20px; }
+.cloud1::after { width: 120px; height: 120px; top: -55px; right: 20px; }
+
+@keyframes floatClouds {
+  from { transform: translateX(-10vw); }
+  to { transform: translateX(110vw); }
+}
+
+.intro-text h1 {
+  font-family: "Great Vibes";
+  font-size: 90px;
+  color: white;
+  text-shadow: 0 0 20px rgba(255,255,255,0.5);
+  text-align: center;
+}
+
+.cake-layout {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  color: white;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cake-text h1 {
+  font-family: "Great Vibes";
+  font-size: 70px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 15px 35px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: white;
+  color: #1e1b4b;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+button:hover { transform: scale(1.1); background: #fde047; }
+
+/* CAKE DRAWING */
+.cake { position: relative; width: 200px; display: flex; flex-direction: column; align-items: center; margin-top: 40px;}
+.frosting { width: 200px; height: 60px; background: #ffd6e0; border-radius: 50% 50% 40% 40%; }
+.layer { width: 200px; height: 50px; border-radius: 12px; margin-top: 5px; }
+.layer.mid { background: #ffe8c2; }
+.layer.bot { background: #fff1f2; }
+
+.candles { position: absolute; top: -35px; display: flex; gap: 25px; }
+.candle { width: 6px; height: 30px; background: #fff; position: relative; }
+.flame { 
+  width: 12px; height: 18px; background: #ffd166; border-radius: 50%; 
+  position: absolute; top: -15px; left: -3px; 
+  animation: flicker 0.5s infinite;
+  box-shadow: 0 0 15px #ffd166;
+}
+
+@keyframes flicker {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* SUNSET SCENE ELEMENTS */
+.sunset-title {
+  font-family: "Great Vibes";
+  font-size: clamp(60px, 10vw, 100px);
+  color: white;
+  margin: 0 0 30px 0;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+.navbar-custom {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 50px;
+  padding: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  z-index: 100;
+  margin-bottom: 40px;
+}
+
+.navbar-custom ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 10px;
+}
+
+.navbar-custom li a {
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 40px;
+  color: white;
+  font-weight: 600;
+  display: block;
+  transition: 0.3s;
+}
+
+.navbar-custom li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-custom .active {
+  background: white;
+  color: #5b21b6;
+}
+
+.short-message {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 30px;
+  color: #1e1b4b;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  text-align: center;
+  line-height: 1.8;
+  position: relative;
+  margin-bottom: 100px; /* Space at bottom for scrolling */
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sky-day"></div>
+<div class="sky-night"></div>
+<div class="cloud cloud1"></div>
+
+<!-- INTRO SCENE -->
+<div class="scene show" id="introScene">
+  <div class="intro-text">
+    <h1>Happy Birthday</h1>
+    <p style="color: white; letter-spacing: 3px;">singing... 🎶</p>
+  </div>
+</div>
+
+<!-- CAKE SCENE -->
+<div class="scene hidden" id="cakeScene">
+  <div class="cake-layout">
+    <div class="cake-text">
+      <h1>Make a Wish!</h1>
+      <button onclick="blow()">Blow Candles</button>
+    </div>
+    <div class="cake">
+      <div class="candles">
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+        <div class="candle"><div class="flame"></div></div>
+      </div>
+      <div class="frosting"></div>
+      <div class="layer mid"></div>
+      <div class="layer bot"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUNSET SCENE -->
+<div class="scene hidden" id="sunsetScene">
+  <h1 class="sunset-title">Marie's 20th!</h1>
+
+  <nav class="navbar-custom">
+    <ul>
+      <li><a href="welcome.php">Welcome!</a></li>
+      <li><a class="active" href="cake.php">Birthday Cake</a></li>
+      <li><a href="login.php">Log Out</a></li>
+    </ul>
+  </nav>
+
+  <div class="short-message">
+    <p>
+      Hi, Marie!
+      <br><br>
+      Of course I wouldn't forget to leave a heartfelt message written by teary-eyed Ysa.
+      <br><br>
+      I can't believe you're already 20! It feels like just yesterday we were in MC, 
+      thinking about how university life would go for us, and I really didn't expect that to be real 
+      — that we'd be here, facing the challenges of the engineering life together 
+      (even though we're in different courses). I admire your study habits and dedication you have because I know 
+      how hard you work (siyempre, praning ka eh), 
+      so I hope that you also take time to rest and take care of yourself amidst all the stress. 
+      I'm so proud of how far you've come especially that our first year in college is about to end, 
+      and I know you're going to achieve amazing things in the future with that passion of yours. 
+      Don't make UP force you to hate chemistry (LMAO) because I know how much you love it, 
+      and I hope that you get to enjoy it as much as before.
+      <br><br>
+      I hope that you have a wonderful birthday (despite the month being hell), 
+      and that you get to celebrate it with the people you love.
+      <br><br>
+      I love you so much, and I'm grateful to have you as my friend!
+      <br><br>
+      — Ysa *:･ﾟ✧
+    </p>
+  </div>
+</div>
+
+<script>
+// Initial transition from Intro to Cake
+setTimeout(() => {
+  document.body.classList.add("night");
+  document.getElementById("introScene").classList.replace("show", "hidden");
+
+  setTimeout(() => {
+    document.getElementById("cakeScene").classList.replace("hidden", "show");
+  }, 1000);
+}, 2500);
+
+// Blow candles and show sunset
+function blow() {
+  document.querySelectorAll(".flame").forEach(f => {
+    f.style.opacity = "0";
+    f.style.transform = "scale(0)";
+    f.style.transition = "0.5s";
+  });
+
+  setTimeout(() => {
+    // Hide cake scene
+    document.getElementById("cakeScene").classList.replace("show", "hidden");
+    
+    // Show sunset scene
+    const sunset = document.getElementById("sunsetScene");
+    sunset.classList.replace("hidden", "show");
+    
+    // Smooth scroll to top of message if needed
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 800);
+}
+</script>
+
+</body>
+</html>

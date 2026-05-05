@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+<title>Marie's 20th Birthday!</title>
+
+<style>
+
+body {
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  background: linear-gradient(135deg, #38bdf8, #93c5fd, #e0f2fe);
+  overflow-x: hidden;
+  position: relative;
+  display: flex; /* Added flex to body */
+  flex-direction: column; /* Stack header, nav, and message */
+  align-items: center; /* Center everything horizontally */
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: -120px;
+  right: -120px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle,
+    rgba(255, 230, 120, 0.9) 0%,
+    rgba(255, 220, 100, 0.4) 40%,
+    transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* CLOUDS */
+.cloud {
+  position: absolute;
+  background: white;
+  border-radius: 200px;
+  opacity: 0.9;
+  filter: blur(0.3px);
+  animation: floatClouds 60s linear infinite;
+  z-index: 1;
+}
+
+.cloud::before, .cloud::after {
+  content: "";
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+.cloud1 { width: 200px; height: 60px; top: 80px; left: -250px; }
+.cloud1::before { width: 100px; height: 100px; top: -40px; left: 20px; }
+.cloud1::after { width: 120px; height: 120px; top: -55px; right: 20px; }
+
+.cloud2 { width: 160px; height: 50px; top: 200px; left: -300px; animation-duration: 80s; }
+.cloud2::before { width: 80px; height: 80px; top: -35px; left: 20px; }
+.cloud2::after { width: 100px; height: 100px; top: -45px; right: 15px; }
+
+@keyframes floatClouds {
+  from { transform: translateX(0); }
+  to { transform: translateX(160vw); }
+}
+
+h1 {
+  font-family: "Great Vibes", cursive;
+  font-size: 110px;
+  color: white;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.7),
+               0 0 30px rgba(255, 200, 100, 0.5);
+  margin: 0;
+}
+
+.header-section {
+  text-align: center;
+  padding: 60px 20px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================
+   🌐 NAVBAR (FIXED VERSION)
+========================= */
+.navbar-custom {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 50px;
+  padding: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  z-index: 100;
+  display: inline-block; /* Crucial: Make it fit the content */
+  width: fit-content;    /* Extra insurance for modern browsers */
+}
+
+.navbar-custom ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 5px; /* Tightened gap to match the cake nav */
+}
+
+.navbar-custom li a {
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 40px;
+  color: white;
+  font-weight: 600;
+  display: block;
+  transition: 0.3s;
+}
+
+.navbar-custom li a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-custom .active {
+  background: white;
+  color: #5b21b6; /* Purple text to match the night sky vibe */
+}
+
+/* MESSAGE BOX */
+.short-message {
+  width: 55%;
+  max-width: 800px;
+  margin: 60px auto;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  color: #0f172a;
+  z-index: 2;
+  transform: translateY(40px);
+  opacity: 0;
+  animation: fadeUp 1s ease forwards;
+  text-align: center;
+}
+
+@keyframes fadeUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="cloud cloud1"></div>
+<div class="cloud cloud2"></div>
+
+<div class="header-section">
+    <h1>Marie's 20th!</h1>
+</div>
+
+<!-- This will now be centered and fit the text because of the body's align-items:center and display:inline-block -->
+<nav class="navbar-custom">
+    <ul>
+        <li><a class="active" href="welcome.php">Welcome!</a></li>
+        <li><a href="cake.php">Birthday Cake</a></li>
+        <li><a href="login.php">Log Out</a></li>
+    </ul>
+</nav>
+
+<div class="short-message">
+    <p style="font-size: 1.1rem; line-height: 1.8;">
+        Hello again, Marie! <br><br>
+        So it's another website... again... <br>(I swear there is no secret/hidden message here HAHAHAH)
+        <br><br>
+        Anyways, HAPPIEST BIRTHDAY BBG! Thank you for always being a good friend and I hope you have the best day ever! I wish you all the best, my chemistry nerd and favorite unc :D <br>
+        <br> Check out the birthday cake and make a wish!<br>(Don't judge it please... I drew it using code... ) <br><br>
+        - Ysa (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
+    </p>
+</div>
+
+</body>
+</html>
